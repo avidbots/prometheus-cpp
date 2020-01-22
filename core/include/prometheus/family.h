@@ -141,7 +141,9 @@ class PROMETHEUS_CPP_CORE_EXPORT Family : public Collectable {
   /// \return Zero or more samples for each dimensional data.
   std::vector<MetricFamily> Collect() override;
 
-  bool UpdateRetentionTime(const double& retention_time, const std::string& re_name, const std::map<std::string, std::string>& re_labels, const bool& bump = true, const bool& debug = false);
+  bool UpdateRetentionTime(const double& retention_time, const std::string& re_name, 
+                           const std::map<std::string, std::string>& re_labels, 
+                           const bool& bump = true, const bool& debug = false);
 
  private:
   std::unordered_map<std::size_t, std::shared_ptr<T>> metrics_;
