@@ -134,9 +134,7 @@ bool Family<T>::UpdateRetentionTime(const double& retention_time, const std::str
           }
         }
         /* Update matched status (matched = true if all labels up to this point are a match) */
-        if (found) {
-          matched = true;
-        } else {
+        if (!found) {
           matched = false;
           break;
         }
