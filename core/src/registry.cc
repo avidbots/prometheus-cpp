@@ -33,7 +33,7 @@ bool FamilyNameExists(const std::string& name, const T& families,
 }
 }  // namespace
 
-Registry::Registry(const InsertBehavior& insert_behavior) : insert_behavior_{insert_behavior} {}
+Registry::Registry(const InsertBehavior insert_behavior) : insert_behavior_{insert_behavior} {}
 
 Registry::~Registry() = default;
 
@@ -93,7 +93,7 @@ template <typename T>
 std::shared_ptr<Family<T>> Registry::Add(
                          const std::string& name, const std::string& help, 
                          const std::map<std::string, std::string>& labels,
-                         const RetentionBehavior& retention_behavior) {
+                         const RetentionBehavior retention_behavior) {
   std::lock_guard<std::mutex> lock{mutex_};
 
   if (NameExistsInOtherType<T>(name)) {
@@ -160,21 +160,21 @@ bool Registry::UpdateRetentionTime(const double retention_time, const std::strin
 template std::shared_ptr<Family<Counter>> Registry::Add(
     const std::string& name, const std::string& help,
     const std::map<std::string, std::string>& labels,
-    const RetentionBehavior& retention_behavior);
+    const RetentionBehavior retention_behavior);
 
 template std::shared_ptr<Family<Gauge>> Registry::Add(
     const std::string& name, const std::string& help,
     const std::map<std::string, std::string>& labels,
-    const RetentionBehavior& retention_behavior);
+    const RetentionBehavior retention_behavior);
 
 template std::shared_ptr<Family<Summary>> Registry::Add(
     const std::string& name, const std::string& help,
     const std::map<std::string, std::string>& labels,
-    const RetentionBehavior& retention_behavior);
+    const RetentionBehavior retention_behavior);
 
 template std::shared_ptr<Family<Histogram>> Registry::Add(
     const std::string& name, const std::string& help,
     const std::map<std::string, std::string>& labels,
-    const RetentionBehavior& retention_behavior);
+    const RetentionBehavior retention_behavior);
 
 }  // namespace prometheus

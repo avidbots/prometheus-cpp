@@ -22,7 +22,7 @@ void MetricBase::UpdateRetentionTime(const double retention_time, const bool bum
   retention_time_.store(retention_time);
 };
 
-bool MetricBase::Expired() const {
+bool MetricBase::IsExpired() const {
   return std::difftime(std::time(nullptr), last_update_) > retention_time_;
 }
 

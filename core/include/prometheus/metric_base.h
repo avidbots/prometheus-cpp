@@ -33,7 +33,7 @@ class PROMETHEUS_CPP_CORE_EXPORT MetricBase {
   void UpdateRetentionTime(const double retention_time, const bool bump = true);
 
   /// \brief    Check if the metric has expired
-  bool Expired() const;
+  bool IsExpired() const;
 
   template<typename T>
   friend class Family;

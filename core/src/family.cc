@@ -12,7 +12,7 @@ namespace prometheus {
 template <typename T>
 Family<T>::Family(const std::string& name, const std::string& help,
                   const std::map<std::string, std::string>& constant_labels, 
-                  const RetentionBehavior& retention_behavior)
+                  const RetentionBehavior retention_behavior)
     : name_(name), help_(help), constant_labels_(constant_labels), retention_behavior_(retention_behavior) {
   assert(CheckMetricName(name_));
 }
@@ -82,7 +82,7 @@ std::vector<MetricFamily> Family<T>::Collect() {
     family.help = help_;
     family.type = T::metric_type;
     for (const auto& m : metrics_) {
-      if (!m.second->Expired()) {
+      if (!m.second->IsExpired()) {
         family.metric.push_back(std::move(CollectMetric(m.first, m.second)));
       } else if (retention_behavior_ == RetentionBehavior::Remove) {
         to_be_removed.push_back(m.second);

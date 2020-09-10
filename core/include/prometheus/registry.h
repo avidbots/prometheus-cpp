@@ -61,7 +61,7 @@ class PROMETHEUS_CPP_CORE_EXPORT Registry : public Collectable {
   /// \brief name Create a new registry.
   ///
   /// \param insert_behavior How to handle families with the same name.
-  explicit Registry(const InsertBehavior& insert_behavior = InsertBehavior::Merge);
+  explicit Registry(const InsertBehavior insert_behavior = InsertBehavior::Merge);
 
   /// \brief name Destroys a registry.
   ~Registry();
@@ -90,7 +90,7 @@ class PROMETHEUS_CPP_CORE_EXPORT Registry : public Collectable {
   std::shared_ptr<Family<T>> Add(
                  const std::string& name, const std::string& help,
                  const std::map<std::string, std::string>& labels,
-                 const RetentionBehavior& retention_behavior = RetentionBehavior::Keep);
+                 const RetentionBehavior retention_behavior = RetentionBehavior::Keep);
 
   const InsertBehavior insert_behavior_;
   std::vector<std::shared_ptr<Family<Counter>>> counters_;

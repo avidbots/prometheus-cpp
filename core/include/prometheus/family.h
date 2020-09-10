@@ -101,7 +101,7 @@ class PROMETHEUS_CPP_CORE_EXPORT Family : public Collectable {
   ///          - Remove: Remove after the metric sees no updates for retention_time_
   Family(const std::string& name, const std::string& help,
          const std::map<std::string, std::string>& constant_labels,
-         const RetentionBehavior& retention_behavior = RetentionBehavior::Keep);
+         const RetentionBehavior retention_behavior = RetentionBehavior::Keep);
 
   /// \brief Add a new dimensional data.
   ///
