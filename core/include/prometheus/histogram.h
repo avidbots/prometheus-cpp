@@ -45,7 +45,7 @@ class PROMETHEUS_CPP_CORE_EXPORT Histogram: public MetricBase {
   /// exponential etc..
   ///
   /// The bucket boundaries cannot be changed once the histogram is created.
-  Histogram(const BucketBoundaries& buckets);
+  Histogram(const BucketBoundaries& buckets, const bool alert_if_no_family = true);
 
   /// \brief Observe the given amount.
   ///
@@ -53,7 +53,7 @@ class PROMETHEUS_CPP_CORE_EXPORT Histogram: public MetricBase {
   /// chosen for which the given amount falls into the half-open interval [b_n,
   /// b_n+1). The counter of the observed bucket is incremented. Also the total
   /// sum of all observations is incremented.
-  void Observe(const double& value, const bool& alert = true);
+  void Observe(const double value);
 
   /// \brief Observe multiple data points.
   ///
@@ -61,7 +61,7 @@ class PROMETHEUS_CPP_CORE_EXPORT Histogram: public MetricBase {
   /// this function must have already sorted the values into buckets).
   /// Also increments the total sum of all observations by the given value.
   void ObserveMultiple(const std::vector<double>& bucket_increments,
-                       const double& sum_of_values, const bool& alert = true);
+                       const double sum_of_values);
 
   /// \brief Get the current value of the counter.
   ///

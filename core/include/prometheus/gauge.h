@@ -28,16 +28,16 @@ class PROMETHEUS_CPP_CORE_EXPORT Gauge: public MetricBase {
   static const MetricType metric_type{MetricType::Gauge};
 
   /// \brief Create a gauge that starts at the given amount.
-  Gauge(const double& value = 0);
+  Gauge(const double value = 0, const bool alert_if_no_family = true);
 
   /// \brief Increment the gauge by the given amount.
-  void Increment(const double& value = 1, const bool& alert = true);
+  void Increment(const double value = 1);
 
   /// \brief Decrement the gauge by the given amount.
-  void Decrement(const double& value = 1, const bool& alert = true);
+  void Decrement(const double value = 1);
 
   /// \brief Set the gauge to the given value.
-  void Set(const double& value, const bool& alert = true);
+  void Set(const double value);
 
   /// \brief Set the gauge to the current unixtime in seconds.
   void SetToCurrentTime();

@@ -91,9 +91,9 @@ TEST_F(TextSerializerTest, shouldSerializeHistogramWithNoBuckets) {
 }
 
 TEST_F(TextSerializerTest, shouldSerializeHistogram) {
-  Histogram histogram{{1}};
-  histogram.Observe(0, false);
-  histogram.Observe(200, false);
+  Histogram histogram{{1}, false};
+  histogram.Observe(0);
+  histogram.Observe(200);
   metric = histogram.Collect();
 
   const auto serialized = Serialize(MetricType::Histogram);
@@ -105,9 +105,9 @@ TEST_F(TextSerializerTest, shouldSerializeHistogram) {
 }
 
 TEST_F(TextSerializerTest, shouldSerializeSummary) {
-  Summary summary{Summary::Quantiles{{0.5, 0.05}}};
-  summary.Observe(0, false);
-  summary.Observe(200, false);
+  Summary summary{Summary::Quantiles{{0.5, 0.05}}, std::chrono::seconds{60}, 5, false};
+  summary.Observe(0);
+  summary.Observe(200);
   metric = summary.Collect();
 
   const auto serialized = Serialize(MetricType::Summary);

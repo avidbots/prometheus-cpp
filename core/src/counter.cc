@@ -2,11 +2,15 @@
 
 namespace prometheus {
 
-void Counter::Increment(const double& value, const bool& alert) {
+
+Counter::Counter(const bool alert_if_no_family) : MetricBase(alert_if_no_family) {};
+
+
+void Counter::Increment(const double value) {
   if (value < 0.0) return;
   value_ = value_ + value;
   last_update_ = std::time(nullptr);
-  if (alert) AlertIfNoFamily();
+  AlertIfNoFamily();
 }
 
 double Counter::Value() const { return value_; }

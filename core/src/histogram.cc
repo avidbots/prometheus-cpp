@@ -7,13 +7,13 @@
 
 namespace prometheus {
 
-Histogram::Histogram(const BucketBoundaries& buckets)
-    : bucket_boundaries_(buckets), bucket_counts_(buckets.size() + 1), sum_(0) {
+Histogram::Histogram(const BucketBoundaries& buckets, const bool alert_if_no_family)
+    : MetricBase(alert_if_no_family), bucket_boundaries_(buckets), bucket_counts_(buckets.size() + 1), sum_(0) {
   assert(std::is_sorted(std::begin(bucket_boundaries_),
                         std::end(bucket_boundaries_)));
 }
 
-void Histogram::Observe(const double& value, const bool& alert) {
+void Histogram::Observe(const double value) {
   // TODO: determine bucket list size at which binary search would be faster
   const auto bucket_index = static_cast<std::size_t>(std::distance(
       bucket_boundaries_.begin(),
@@ -23,11 +23,11 @@ void Histogram::Observe(const double& value, const bool& alert) {
   sum_ = sum_ + value;
   bucket_counts_[bucket_index] = bucket_counts_[bucket_index] + 1;
   last_update_ = std::time(nullptr);
-  if (alert) AlertIfNoFamily();
+  AlertIfNoFamily();
 }
 
 void Histogram::ObserveMultiple(const std::vector<double>& bucket_increments,
-                                const double& sum_of_values, const bool& alert) {
+                                const double sum_of_values) {
   if (bucket_increments.size() != bucket_counts_.size()) {
     throw std::length_error(
         "The size of bucket_increments was not equal to"
@@ -40,7 +40,7 @@ void Histogram::ObserveMultiple(const std::vector<double>& bucket_increments,
     bucket_counts_[i] = bucket_counts_[i] + bucket_increments[i];
   }
   last_update_ = std::time(nullptr);
-  if (alert) AlertIfNoFamily();
+  AlertIfNoFamily();
 }
 
 ClientMetric Histogram::Collect() const {

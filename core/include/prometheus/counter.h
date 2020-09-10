@@ -32,12 +32,12 @@ class PROMETHEUS_CPP_CORE_EXPORT Counter: public MetricBase {
   static const MetricType metric_type{MetricType::Counter};
 
   /// \brief Create a counter that starts at 0.
-  Counter() = default;
+  Counter(const bool alert_if_no_family = true);
 
   /// \brief Increment the counter by a given amount.
   ///
   /// The counter will not change if the given amount is negative.
-  void Increment(const double& = 1, const bool& alert = true);
+  void Increment(const double = 1);
 
   /// \brief Get the current value of the counter.
   double Value() const;

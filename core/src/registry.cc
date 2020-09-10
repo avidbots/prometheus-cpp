@@ -132,7 +132,7 @@ std::shared_ptr<Family<T>> Registry::Add(
   return family;
 }
 
-bool Registry::UpdateRetentionTime(const double& retention_time, const std::string& re_name, const std::map<std::string, std::string>& re_labels, const std::set<MetricType>& families, const bool& bump, const bool& debug) {
+bool Registry::UpdateRetentionTime(const double retention_time, const std::string& re_name, const std::map<std::string, std::string>& re_labels, const std::set<MetricType>& families, const bool bump, const bool debug) {
   bool updated(false);
   if (families.find(MetricType::Counter) != families.end()) {
     for (auto family: counters_) {

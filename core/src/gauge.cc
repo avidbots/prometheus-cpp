@@ -5,26 +5,26 @@
 
 namespace prometheus {
 
-Gauge::Gauge(const double& value) : value_(value) {}
+Gauge::Gauge(const double value, const bool alert_if_no_family) : MetricBase(alert_if_no_family), value_(value) {}
 
-void Gauge::Increment(const double& value, const bool& alert) {
+void Gauge::Increment(const double value) {
   if (value < 0.0) return;
   value_ = value_ + value;
   last_update_ = std::time(nullptr);
-  if (alert) AlertIfNoFamily();
+  AlertIfNoFamily();
 }
 
-void Gauge::Decrement(const double& value, const bool& alert) {
+void Gauge::Decrement(const double value) {
   if (value < 0.0) return;
   value_ = value_ - value;
   last_update_ = std::time(nullptr);
-  if (alert) AlertIfNoFamily();
+  AlertIfNoFamily();
 }
 
-void Gauge::Set(const double& value, const bool& alert) {
+void Gauge::Set(const double value) {
   value_ = value;
   last_update_ = std::time(nullptr);
-  if (alert) AlertIfNoFamily();
+  AlertIfNoFamily();
 }
 
 void Gauge::SetToCurrentTime() {

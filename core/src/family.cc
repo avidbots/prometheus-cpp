@@ -100,9 +100,9 @@ std::vector<MetricFamily> Family<T>::Collect() {
 }
 
 template <typename T>
-bool Family<T>::UpdateRetentionTime(const double& retention_time, const std::string& re_name, 
+bool Family<T>::UpdateRetentionTime(const double retention_time, const std::string& re_name, 
                                     const std::map<std::string, std::string>& re_labels, 
-                                    const bool& bump, const bool& debug) {
+                                    const bool bump, const bool debug) {
   /* Setup */
   bool modified(false);
   const boost::regex name_expr(re_name);

@@ -75,11 +75,11 @@ class PROMETHEUS_CPP_CORE_EXPORT Summary: public MetricBase {
   /// effectively results in a complete reset of the summary each time max_age
   /// has passed. The default value is 5.
   Summary(const Quantiles& quantiles,
-          const std::chrono::milliseconds& max_age = std::chrono::seconds{60},
-          const int& age_buckets = 5);
+          const std::chrono::milliseconds max_age = std::chrono::seconds{60},
+          const int age_buckets = 5, const bool alert_if_no_family = true);
 
   /// \brief Observe the given amount.
-  void Observe(double value, const bool& alert = true);
+  void Observe(double value);
 
   /// \brief Get the current value of the summary.
   ///

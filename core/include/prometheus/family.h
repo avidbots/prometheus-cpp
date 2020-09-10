@@ -23,6 +23,9 @@
 
 namespace prometheus {
 
+// Retention Behaviour:
+//  - Keep: Publish for all time
+//  - Remove: Remove after the metric sees no updates for retention_time_
 enum class RetentionBehavior {Keep, Remove};
 
 
@@ -93,6 +96,9 @@ class PROMETHEUS_CPP_CORE_EXPORT Family : public Collectable {
   /// \param constant_labels Assign a set of key-value pairs (= labels) to the
   ///        metric. All these labels are propagated to each time series within
   ///        the metric.
+  /// \param retention_behavior Allows metrics to expire (removed from publish list).
+  ///          - Keep: Publish for all time
+  ///          - Remove: Remove after the metric sees no updates for retention_time_
   Family(const std::string& name, const std::string& help,
          const std::map<std::string, std::string>& constant_labels,
          const RetentionBehavior& retention_behavior = RetentionBehavior::Keep);
@@ -141,9 +147,18 @@ class PROMETHEUS_CPP_CORE_EXPORT Family : public Collectable {
   /// \return Zero or more samples for each dimensional data.
   std::vector<MetricFamily> Collect() override;
 
-  bool UpdateRetentionTime(const double& retention_time, const std::string& re_name, 
+  /// \brief Updates the retention time of one or more metrics.
+  ///
+  /// \param retention_time The timestamp used to mimic the last update to the metric.
+  /// \param re_name The regular expression used to match the metric's name.
+  /// \param re_labels The set of regular expressions used to match the metric's labels (all expressions must match).
+  /// \param bump Will update the timestamp with the current time and ignore the retention_time parameter.
+  /// \param debug Print some debug statements.
+  ///
+  /// \return true if at least one metric was found and updated.
+  bool UpdateRetentionTime(const double retention_time, const std::string& re_name, 
                            const std::map<std::string, std::string>& re_labels, 
-                           const bool& bump = true, const bool& debug = false);
+                           const bool bump = true, const bool debug = false);
 
  private:
   std::unordered_map<std::size_t, std::shared_ptr<T>> metrics_;
