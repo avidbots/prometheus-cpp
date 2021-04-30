@@ -278,7 +278,7 @@ scraped by telegraf as part of integration tests.
 
 ## FAQ
 
-### What scrape formats do you support
+### What scrape formats do you support 
 
 Only the [Prometheus Text Exposition
 Format](https://github.com/prometheus/docs/blob/master/content/docs/instrumenting/exposition_formats.md#text-format-details).
